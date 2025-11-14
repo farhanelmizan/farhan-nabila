@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farhan &amp; Nabila — Undangan Pernikahan</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Remove max-width: 100% and margin: 0 auto from .container for better centering */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.2rem;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    /* Remove width: 100% from .card to allow natural sizing */
+    .card {
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* Use default grid from CSS file, remove auto-fit override */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 1.2rem;
+      align-items: start;
+      width: 100%;
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        padding: 0.8rem;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .story-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        padding: 0.5rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-btn {
+        display: inline-block;
+      }
+      .hero {
+        padding: 2rem 0.5rem;
+      }
+      .hero-inner {
+        padding: 1rem;
+      }
+      .hero-title {
+        font-size: 1.5rem;
+      }
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+      .countdown {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .card {
+        padding: 0.7rem;
+      }
+    }
+
+    /* Prevent horizontal scroll on small screens */
+    html, body {
+      overflow-x: hidden;
+    }
+
+    /* Ensure images and videos scale */
+    img, video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    /* Book Cover Styles */
+    .cover-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8) url('media/cover-bg.jpg') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .cover-content {
+      text-align: center;
+      color: white;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .cover-title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cover-names {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .cover-dear {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      background-color: #b8864b;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #a06e3c;
+    }
+
+    /* Hero Overlay Styles */
+    .hero-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7) url('media/hero-bg.jpg') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1001;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #f5e6d6;
+    }
+
+    .hero-names {
+      font-size: 4rem;
+      font-weight: 700;
+      margin: 0.5rem 0 1rem;
+      color: #b8864b;
+    }
+
+    .hero-date {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #f5e6d6;
+    }
+
+    .scroll-down {
+      margin-top: 1.5rem;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .scroll-mouse {
+      width: 24px;
+      height: auto;
+      margin: 0 auto 0.5rem;
+    }
+
+    .scroll-text {
+      font-size: 1rem;
+      color: #f5e6d6;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Love Section Styles */
+    .love-section {
+      background-color: #f9f9f9;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .love-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .love-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #b8864b;
+    }
+
+    .love-content blockquote {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin: 1.5rem 0;
+      color: #333;
+      position: relative;
+    }
+
+    .love-content blockquote:before {
+      content: open-quote;
+      font-size: 3rem;
+      line-height: 0;
+      position: absolute;
+      left: -10px;
+      top: -10px;
+      color: #b8864b;
+    }
+
+    .love-content blockquote:after {
+      content: close-quote;
+      font-size: 3rem;
+      line-height: 0;
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      color: #b8864b;
+    }
+
+    .love-verse {
+      font-size: 1rem;
+      margin-top: 1rem;
+      color: #777;
+    }
+
+    /* Invitation Section Styles */
+    .invitation-section {
+      background-color: #fff3e0;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .invitation-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .invitation-content p {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+      color: #333;
+    }
+
+    /* Footer Styles */
+    .site-footer {
+      background-color: #333;
+      color: #f5f5f5;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .site-footer .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .site-footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 720px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      .hero-names {
+        font-size: 3rem;
+      }
+      .hero-date {
+        font-size: 1.2rem;
+      }
+      .scroll-text {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+    <!-- Book Cover Overlay -->
+    <div id="coverOverlay" class="cover-overlay">
+      <div class="cover-content">
+        <div class="cover-bg"></div>
+        <div class="cover-inner">
+          <p class="cover-title">The Wedding Of</p>
+          <h1 class="cover-names">Nabila &amp; Farhan</h1>
+          <p class="cover-dear">Kepada YTH Bapak/Ibu/Saudara/i<br><span id="guestName">Nama Tamu</span></p>
+          <button id="openInviteCover" class="btn btn-primary">Buka Undangan</button>
+        </div>
+      </div>
+    </div>
+    <!-- Hero Overlay (after cover) -->
+    <div id="heroOverlay" class="hero-overlay" style="display:none;">
+      <div class="hero-bg-video">
+        <video id="heroBgVideo" class="bg-video" playsinline muted loop preload="auto" poster="media/bg-image.jpg">
+          <source src="media/bg-video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-content">
+        <p class="hero-title">The Wedding Of</p>
+        <img src="media/fn_logo.webp" alt="Farhan & Nabila Logo" class="fn-logo" />
+        <h1 class="hero-names">Nabila &amp; Farhan</h1>
+        <div class="hero-date">17.01.2026</div>
+        <div class="scroll-down">
+          <div id="lottie-scroll" class="scroll-lottie"></div>
+          <div class="scroll-text">Scroll down</div>
+        </div>
+      </div>
+      <nav class="bottom-nav">
+        <a href="#home">Home</a>
+        <a href="#story">Cerita</a>
+        <a href="#event">Acara</a>
+        <a href="#rsvp">RSVP</a>
+        <a href="#gift">Hadiah</a>
+        <a href="#guestbook">Ucapan</a>
+      </nav>
+    </div>
+    <!-- Love Section -->
+    <section id="loveSection" class="love-section" style="display:none;">
+      <div class="love-content">
+        <h2>WITH LOVE</h2>
+        <blockquote>“Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir”</blockquote>
+        <div class="love-verse">(Qs. Ar. Rum : 21)</div>
+      </div>
+    </section>
+    <!-- Invitation Section -->
+    <section id="invitationSection" class="invitation-section" style="display:none;">
+      <div class="invitation-content">
+        <p>Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i serta kerabat sekalian untuk menghadiri acara pernikahan kami :</p>
+      </div>
+    </section>
+    <!-- Main Content (hidden until after intro sections) -->
+    <div id="mainContent" style="display:none;">
+      <!-- Background video (muted for autoplay). fallback image via poster and CSS -->
+      <div class="media-wrap" aria-hidden="true">
+        <video id="bgVideo" class="bg-video" playsinline muted loop preload="auto" poster="media/bg-image.jpg">
+          <source src="media/bg-video.mp4" type="video/mp4">
+        </video>
+
+        <!-- Parallax foreground layers (decorative, will move slightly with mouse/scroll) -->
+        <div class="parallax-layer layer-1" data-speed="0.025" aria-hidden="true">
+          <!-- subtle vignette / texture -->
+        </div>
+        <div class="parallax-layer layer-2" data-speed="0.06" aria-hidden="true">
+          <!-- floral faint overlay (CSS/SVG will show) -->
+        </div>
+
+        <div class="bg-overlay"></div>
+      </div>
+
+      <!-- Audio -->
+      <audio id="bgMusic" src="media/bg-music.mp3" preload="auto"></audio>
+
+      <!-- Header -->
+      <header class="site-header">
+        <nav class="nav container">
+          <div class="brand">
+            <a href="#home" class="logo">Farhan &amp; Nabila</a>
+          </div>
+
+          <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#story">Cerita</a>
+            <a href="#event">Acara</a>
+            <a href="#rsvp">RSVP</a>
+            <a href="#gift">Hadiah</a>
+            <a href="#guestbook">Ucapan</a>
+          </div>
+
+          <div class="nav-actions">
+            <button id="musicToggle" class="music-toggle" aria-pressed="false" title="Toggle Musik">♫</button>
+            <button id="menuBtn" class="menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <!-- HERO with overlay SVG floral frame + letter-by-letter title -->
+        <section id="home" class="hero container">
+          <div class="hero-inner reveal">
+            <p class="small-note">Dengan rasa syukur dan bahagia</p>
+
+            <!-- Animated title wrapper: JS will split into letters -->
+            <h1 class="hero-title js-split" data-text="Farhan Siddiq Elmizan & Nabila Tsurayya">
+              Farhan Siddiq Elmizan &amp; Nabila Tsurayya
+            </h1>
+
+            <p class="hero-sub">Kami mengundang Anda untuk hadir dalam acara pernikahan kami</p>
+
+            <div class="hero-actions">
+              <button id="openInvite" class="btn btn-primary">Buka Undangan</button>
+              <a href="#event" class="btn btn-ghost">Lihat Acara</a>
+            </div>
+
+            <div class="date-block">
+              <time datetime="2026-01-17">17 Januari 2026</time> •
+              <span>Akad: 08.00 WIB</span> • <span>Resepsi: 10.00 WIB</span>
+            </div>
+          </div>
+
+          <!-- Decorative SVG floral frame (inline SVG so you can style it easily) -->
+          <svg class="floral-frame" viewBox="0 0 1200 600" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+            <!-- Example floral corners / vines (stylized) -->
+            <defs>
+              <linearGradient id="goldGrad" x1="0" x2="1">
+                <stop offset="0" stop-color="#f5e6d6"/>
+                <stop offset="1" stop-color="#b8864b"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Left corner -->
+            <path d="M30,520 C120,420 80,300 40,200 C20,150 110,110 160,140 C210,170 230,230 230,300" fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.9"></path>
+
+            <!-- Right corner -->
+            <path d="M1170,80 C1080,180 1120,300 1160,400 C1180,450 1090,490 1040,460 C990,430 970,370 970,300" fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.9"></path>
+
+            <!-- Subtle decorative dots -->
+            <g opacity="0.6">
+              <circle cx="100" cy="80" r="2.5" fill="#b8864b"></circle>
+              <circle cx="1050" cy="520" r="2.5" fill="#b8864b"></circle>
+            </g>
+          </svg>
+
+        </section>
+
+        <!-- Countdown -->
+        <section id="save" class="section reveal">
+          <div class="card container">
+            <h2 class="section-title">Save The Date</h2>
+            <p class="muted">Hitung mundur menuju hari bahagia</p>
+            <div id="countdown" class="countdown">
+              <div class="time"><span id="days">00</span><small>Hari</small></div>
+              <div class="time"><span id="hours">00</span><small>Jam</small></div>
+              <div class="time"><span id="minutes">00</span><small>Menit</small></div>
+              <div class="time"><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Event -->
+        <section id="event" class="section reveal">
+          <div class="container grid">
+            <div class="card event-card">
+              <h2 class="section-title">Acara</h2>
+              <div class="when">
+                <h3>Akad</h3>
+                <p>17 Januari 2026 • 08.00 WIB</p>
+              </div>
+              <div class="when">
+                <h3>Resepsi</h3>
+                <p>17 Januari 2026 • 10.00 WIB</p>
+              </div>
+
+              <div class="venue">
+                <h3>Tempat</h3>
+                <p>Masjid Daarul Adzkaar, Lebak Bulus, Jakarta Selatan</p>
+                <a href="https://share.google/lsfYNbsdZppKUB1hJ" target="_blank" rel="noopener noreferrer" class="link">Buka Lokasi di Google Maps</a>
+              </div>
+            </div>
+
+            <div class="card map-card">
+              <h3>Petunjuk</h3>
+              <div class="map-embed">
+                <img src="media/bg-image.jpg" alt="Map placeholder" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Story -->
+        <section id="story" class="section reveal">
+          <div class="container">
+            <h2 class="section-title">Cerita Kami</h2>
+            <div class="story-grid">
+              <article class="story-item card">
+                <h4>Kisah Pertemuan</h4>
+                <p>Kami bertemu secara tak sengaja dan sejak itu perjalanan kami dimulai. (Ganti dengan cerita Anda sendiri.)</p>
+              </article>
+
+              <article class="story-item card">
+                <h4>Lamaran</h4>
+                <p>Pada malam yang tenang, Ia berlutut dan meminta restu. (Ganti teks sesuai pengalaman).</p>
+              </article>
+
+              <article class="story-item card">
+                <h4>Hari Bahagia</h4>
+                <p>Kami akan mengikat janji pada tanggal yang telah ditentukan — dan kami ingin Anda hadir.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp" class="section reveal">
+          <div class="container card rsvp-card">
+            <h2 class="section-title">RSVP</h2>
+            <p class="muted">Mohon konfirmasi kehadiran Anda</p>
+
+            <form id="rsvpForm" action="https://formspree.io/f/yourFormID" method="POST" class="form-grid">
+              <label>
+                <span>Nama</span>
+                <input type="text" name="name" required placeholder="Nama lengkap" />
+              </label>
+              <label>
+                <span>Jumlah Tamu</span>
+                <input type="number" name="guests" min="1" value="1" required />
+              </label>
+              <label>
+                <span>Kehadiran</span>
+                <select name="attending" required>
+                  <option value="">Pilih...</option>
+                  <option value="Hadir">Hadir</option>
+                  <option value="Tidak hadir">Tidak hadir</option>
+                </select>
+              </label>
+              <label class="full">
+                <span>Pesan untuk pengantin</span>
+                <textarea name="message" rows="3" placeholder="Ucapan atau doa"></textarea>
+              </label>
+
+              <input type="hidden" name="_next" value="#" />
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Kirim</button>
+                <span class="muted small">Anda juga bisa menghubungi via WhatsApp jika perlu</span>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Gift -->
+        <section id="gift" class="section reveal">
+          <div class="container card">
+            <h2 class="section-title">Hadiah</h2>
+            <p class="muted">Jika ingin mengirim hadiah, bisa melalui transfer atau QRIS</p>
+
+            <div class="gift-list">
+              <div class="gift-item">
+                <div>
+                  <strong>BCA</strong>
+                  <p class="acc">1234567890</p>
+                  <p class="muted small">A/N: Farhan S. Elmizan</p>
+                </div>
+                <div>
+                  <button class="btn btn-ghost copy-btn" data-copy="1234567890">Salin</button>
+                </div>
+              </div>
+
+              <div class="gift-item">
+                <div>
+                  <strong>QRIS</strong>
+                  <p class="muted small">Silakan scan saat acara</p>
+                </div>
+                <div>
+                  <button class="btn btn-ghost">Tampilkan QR</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Guestbook -->
+        <section id="guestbook" class="section reveal">
+          <div class="container card">
+            <h2 class="section-title">Ucapan &amp; Doa</h2>
+            <p class="muted">Tulis ucapan anda — akan tampil di halaman ketika Firebase diaktifkan</p>
+
+            <form id="guestForm" class="form-inline" action="https://formspree.io/f/yourFormID" method="POST">
+              <input type="text" name="name" placeholder="Nama" required />
+              <input type="text" name="message" placeholder="Tulis ucapan..." required />
+              <button type="submit" class="btn">Kirim</button>
+            </form>
+
+            <div id="guestMessages" class="messages">
+              <p class="muted">(Guestbook kosong — tambahkan Firebase jika ingin komentar muncul langsung)</p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <div class="container">
+            <p class="muted small">Made with ♥ — Farhan &amp; Nabila</p>
+          </div>
+        </footer>
+      </main>
+
+      <!-- Lottie JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+      <script src="js/script.js"></script>
+    </div>
+  </body>
+</html>
