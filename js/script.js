@@ -1,3 +1,22 @@
+// Trigger slide-down animation for hero section contents after page load
+window.addEventListener('DOMContentLoaded', function() {
+  
+  const items = document.querySelectorAll(".slide-down-animate");
+
+  setTimeout(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    });
+  
+    items.forEach((el) => observer.observe(el));
+  }, 2000); // 200ms is enough
+
+
+});
 // interactions: open invite (plays music), reveal on scroll, countdown, copy buttons, music toggle,
 // letter-by-letter title reveal, and parallax layers
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.getElementById('navLinks');
   const parallaxLayers = document.querySelectorAll('.parallax-layer');
   const floralSVG = document.querySelector('.floral-frame');
-  const titleEl = document.querySelector('.hero-title.js-split');
+  const titleEls = document.querySelectorAll('.hero-title.js-split');
+
+
+  document.querySelectorAll(".detail-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = document.querySelector(btn.dataset.target);
+      target.style.display = target.style.display === "block" ? "none" : "block";
+    });
+  });
+
+  // Copy account number
+  document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(btn.dataset.copy);
+      alert("Nomor rekening telah disalin");
+    });
+  });
 
   // MOBILE MENU
   if (menuBtn) {
@@ -27,7 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (openBtn) {
     openBtn.addEventListener('click', async () => {
       try {
-        await bgMusic.play();
+        // Ensure music starts playing
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+        }
         musicToggle.setAttribute('aria-pressed', 'true');
         musicToggle.classList.add('on');
       } catch (e) {
@@ -38,11 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try { await bgVideo.play(); } catch(e){ /* ignore */ }
       }
 
-      // animate title letters on open (if not already played)
-      if (titleEl && !titleEl.classList.contains('animated')) {
-        animateTitleLetters(titleEl);
-      }
-
       // focus next section
       document.getElementById('save').scrollIntoView({behavior:'smooth'});
     });
@@ -50,20 +84,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Music toggle
   if (musicToggle) {
-    musicToggle.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-        musicToggle.setAttribute('aria-pressed', 'true');
-        musicToggle.classList.add('on');
-      } else {
-        bgMusic.pause();
-        musicToggle.setAttribute('aria-pressed', 'false');
-        musicToggle.classList.remove('on');
+    musicToggle.addEventListener('click', async () => {
+      try {
+        if (bgMusic.paused) {
+          await bgMusic.play();
+          musicToggle.setAttribute('aria-pressed', 'true');
+          musicToggle.classList.add('on');
+        } else {
+          bgMusic.pause();
+          musicToggle.setAttribute('aria-pressed', 'false');
+          musicToggle.classList.remove('on');
+        }
+      } catch (e) {
+        console.warn('Music toggle error:', e);
       }
     });
   }
 
-  // REVEAL ON SCROLL using IntersectionObserver
+  // Reveal on scroll using IntersectionObserver
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -73,6 +111,127 @@ document.addEventListener('DOMContentLoaded', () => {
   }, {threshold: 0.15});
 
   revealEls.forEach(el => io.observe(el));
+
+  // Initialize Lottie animation
+  function initLottieAnimation() {
+    const lottieContainer = document.getElementById('lottie-scroll');
+    if (!lottieContainer || lottieContainer.hasAttribute('data-lottie-loaded')) {
+      return; // already loaded or container doesn't exist
+    }
+    
+    if (!window.lottie) {
+      console.warn('Lottie library not available yet');
+      return;
+    }
+    
+    try {
+      lottieContainer.setAttribute('data-lottie-loaded', 'true');
+      window.lottie.loadAnimation({
+        container: lottieContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'media/scroll_down.json'
+      });
+      console.log('Lottie animation loaded successfully');
+    } catch (e) {
+      console.error('Error loading Lottie animation:', e);
+    }
+  }
+
+  // Initialize Birds Lottie animation
+  function initBirdsAnimation() {
+    const birdsContainer = document.getElementById('lottie-birds');
+    if (!birdsContainer || birdsContainer.hasAttribute('data-lottie-loaded')) {
+      return; // already loaded or container doesn't exist
+    }
+    
+    if (!window.lottie) {
+      console.warn('Lottie library not available yet');
+      return;
+    }
+    
+    try {
+      birdsContainer.setAttribute('data-lottie-loaded', 'true');
+      window.lottie.loadAnimation({
+        container: birdsContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'media/birds.json'
+      });
+      console.log('Birds animation loaded successfully');
+    } catch (e) {
+      console.error('Error loading birds animation:', e);
+    }
+  }
+
+  // Initialize Wedding Floral Lottie animation
+  function initWeddingFloralAnimation() {
+    const floralContainer = document.getElementById('lottie-weddingfloral');
+    if (!floralContainer || floralContainer.hasAttribute('data-lottie-loaded')) {
+      return; // already loaded or container doesn't exist
+    }
+    
+    if (!window.lottie) {
+      console.warn('Lottie library not available yet');
+      return;
+    }
+    
+    try {
+      floralContainer.setAttribute('data-lottie-loaded', 'true');
+      window.lottie.loadAnimation({
+        container: floralContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'media/weddingfloral.json'
+      });
+      console.log('Wedding floral animation loaded successfully');
+    } catch (e) {
+      console.error('Error loading wedding floral animation:', e);
+    }
+  }
+  
+  // Try to initialize Lottie when the hero section becomes visible
+  const heroSectionForLottie = document.getElementById('heroSection');
+  if (heroSectionForLottie) {
+    const lottieObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log('Hero section visible, initializing animations');
+          initLottieAnimation();
+          initBirdsAnimation();
+          // Stop observing after first intersection
+          lottieObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.1});
+    lottieObserver.observe(heroSectionForLottie);
+  } else {
+    console.warn('heroSection element not found');
+  }
+
+  // Also try initializing after a short delay as fallback
+  setTimeout(() => {
+    if (document.getElementById('lottie-scroll') && !document.getElementById('lottie-scroll').hasAttribute('data-lottie-loaded')) {
+      console.log('Initializing scroll animation via timeout');
+      initLottieAnimation();
+    }
+    if (document.getElementById('lottie-birds') && !document.getElementById('lottie-birds').hasAttribute('data-lottie-loaded')) {
+      console.log('Initializing birds animation via timeout');
+      initBirdsAnimation();
+    }
+    if (document.getElementById('lottie-weddingfloral') && !document.getElementById('lottie-weddingfloral').hasAttribute('data-lottie-loaded')) {
+      console.log('Initializing wedding floral animation via timeout');
+      initWeddingFloralAnimation();
+    }
+  }, 500);
+
+  // Try immediate initialization for weddingfloral (it's visible on page load)
+  if (document.getElementById('lottie-weddingfloral')) {
+    initWeddingFloralAnimation();
+  }
 
   // COUNTDOWN (to Akad start)
   (function setupCountdown(){
@@ -222,17 +381,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // init split immediately so layout stable; reveal triggered on open or when visible
-  if (titleEl) {
+  if (titleEls) {
+    titleEls.forEach((titleEl) => {
     splitTitleToLetters(titleEl);
-    // Optional: if title is already visible on load, animate it
-    const titleObserver = new IntersectionObserver((entries) => {
+
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !titleEl.classList.contains('animated')) {
           animateTitleLetters(titleEl);
         }
       });
-    }, {threshold:0.35});
-    titleObserver.observe(titleEl);
+    }, { threshold: 0.35 });
+
+    observer.observe(titleEl);
+  });
+
   }
 
   // Reveal title letters also when RSVPed/opened (openInvite handler triggers animateTitleLetters)
@@ -245,6 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const invitationSection = document.getElementById('invitationSection');
   const mainContent = document.getElementById('mainContent');
   const openInviteCover = document.getElementById('openInviteCover');
+  const heroSection = document.getElementById('heroSection');
 
   function showSection(section) {
     if (section) {
@@ -259,48 +423,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (coverOverlay && openInviteCover && heroOverlay) {
+  if (coverOverlay && openInviteCover && heroSection) {
     openInviteCover.addEventListener('click', () => {
+
       hideSection(coverOverlay);
-      showSection(heroOverlay);
-      // Play hero video
+      showSection(mainContent);
+      try {
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            musicToggle.setAttribute('aria-pressed', 'true');
+            musicToggle.classList.add('on');
+          });
+        }
+      } catch(e) {
+        console.warn("Autoplay blocked:", e);
+      }
+      // Play hero video once
       if (heroBgVideo) {
         heroBgVideo.muted = true;
-        heroBgVideo.loop = true;
+        heroBgVideo.loop = false;
         heroBgVideo.play().catch(()=>{});
-      }
-      // Lottie scroll animation
-      if (window.lottie) {
-        window.lottie.loadAnimation({
-          container: document.getElementById('lottie-scroll'),
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-          path: 'media/scroll_down.json'
+        heroBgVideo.addEventListener('ended', () => {
+          heroBgVideo.pause();
         });
       }
+      // Lottie animation will initialize automatically via IntersectionObserver
     });
   }
-
-  // Sequential scroll logic
-  let currentStep = 1;
-  window.addEventListener('wheel', (e) => {
-    if (currentStep === 1 && heroOverlay && heroOverlay.style.display !== 'none') {
-      hideSection(heroOverlay);
-      showSection(loveSection);
-      window.scrollTo({top: loveSection.offsetTop, behavior: 'smooth'});
-      currentStep = 2;
-    } else if (currentStep === 2 && loveSection && loveSection.style.display !== 'none') {
-      hideSection(loveSection);
-      showSection(invitationSection);
-      window.scrollTo({top: invitationSection.offsetTop, behavior: 'smooth'});
-      currentStep = 3;
-    } else if (currentStep === 3 && invitationSection && invitationSection.style.display !== 'none') {
-      hideSection(invitationSection);
-      showSection(mainContent);
-      window.scrollTo({top: mainContent.offsetTop, behavior: 'smooth'});
-      currentStep = 4;
-    }
-  });
 
 });
