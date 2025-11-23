@@ -1,6 +1,6 @@
 // Trigger slide-down animation for hero section contents after page load
-window.addEventListener('DOMContentLoaded', function() {
-  
+window.addEventListener('DOMContentLoaded', function () {
+
   const items = document.querySelectorAll(".slide-down-animate");
 
   setTimeout(() => {
@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
-  
+
     items.forEach((el) => observer.observe(el));
   }, 2000); // 200ms is enough
 
@@ -32,6 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const parallaxLayers = document.querySelectorAll('.parallax-layer');
   const floralSVG = document.querySelector('.floral-frame');
   const titleEls = document.querySelectorAll('.hero-title.js-split');
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Get 'guest' parameter from URL
+  const guestName = getQueryParam('to');
+
+  const guestEl = document.getElementById('guestName');
+  guestEl.textContent = guestName ? decodeURIComponent(guestName) : "Nama Tamu";
+
 
 
   document.querySelectorAll(".detail-btn").forEach(btn => {
@@ -74,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (bgVideo && bgVideo.paused) {
-        try { await bgVideo.play(); } catch(e){ /* ignore */ }
+        try { await bgVideo.play(); } catch (e) { /* ignore */ }
       }
 
       // focus next section
-      document.getElementById('save').scrollIntoView({behavior:'smooth'});
+      document.getElementById('save').scrollIntoView({ behavior: 'smooth' });
     });
   }
 
@@ -108,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entry.target.classList.add('revealed');
       }
     });
-  }, {threshold: 0.15});
+  }, { threshold: 0.15 });
 
   revealEls.forEach(el => io.observe(el));
 
@@ -118,12 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!lottieContainer || lottieContainer.hasAttribute('data-lottie-loaded')) {
       return; // already loaded or container doesn't exist
     }
-    
+
     if (!window.lottie) {
       console.warn('Lottie library not available yet');
       return;
     }
-    
+
     try {
       lottieContainer.setAttribute('data-lottie-loaded', 'true');
       window.lottie.loadAnimation({
@@ -145,12 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!birdsContainer || birdsContainer.hasAttribute('data-lottie-loaded')) {
       return; // already loaded or container doesn't exist
     }
-    
+
     if (!window.lottie) {
       console.warn('Lottie library not available yet');
       return;
     }
-    
+
     try {
       birdsContainer.setAttribute('data-lottie-loaded', 'true');
       window.lottie.loadAnimation({
@@ -172,12 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!floralContainer || floralContainer.hasAttribute('data-lottie-loaded')) {
       return; // already loaded or container doesn't exist
     }
-    
+
     if (!window.lottie) {
       console.warn('Lottie library not available yet');
       return;
     }
-    
+
     try {
       floralContainer.setAttribute('data-lottie-loaded', 'true');
       window.lottie.loadAnimation({
@@ -192,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error loading wedding floral animation:', e);
     }
   }
-  
+
   // Try to initialize Lottie when the hero section becomes visible
   const heroSectionForLottie = document.getElementById('heroSection');
   if (heroSectionForLottie) {
@@ -206,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
           lottieObserver.unobserve(entry.target);
         }
       });
-    }, {threshold: 0.1});
+    }, { threshold: 0.1 });
     lottieObserver.observe(heroSectionForLottie);
   } else {
     console.warn('heroSection element not found');
@@ -234,14 +245,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // COUNTDOWN (to Akad start)
-  (function setupCountdown(){
+  (function setupCountdown() {
     const target = new Date(2026, 0, 17, 8, 0, 0); // Jan 17 2026 08:00 local
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
     const minsEl = document.getElementById('minutes');
     const secsEl = document.getElementById('seconds');
 
-    function update(){
+    function update() {
       const now = new Date();
       let diff = target - now;
       if (isNaN(diff) || diff <= 0) {
@@ -265,10 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
       diff -= m * min;
       const s = Math.floor(diff / sec);
 
-      if (daysEl) daysEl.textContent = String(d).padStart(2,'0');
-      if (hoursEl) hoursEl.textContent = String(h).padStart(2,'0');
-      if (minsEl) minsEl.textContent = String(m).padStart(2,'0');
-      if (secsEl) secsEl.textContent = String(s).padStart(2,'0');
+      if (daysEl) daysEl.textContent = String(d).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
+      if (minsEl) minsEl.textContent = String(m).padStart(2, '0');
+      if (secsEl) secsEl.textContent = String(s).padStart(2, '0');
     }
 
     update();
@@ -283,8 +294,8 @@ document.addEventListener('DOMContentLoaded', () => {
         await navigator.clipboard.writeText(text);
         const original = btn.textContent;
         btn.textContent = 'Tersalin!';
-        setTimeout(()=> btn.textContent = original, 1400);
-      } catch(err) {
+        setTimeout(() => btn.textContent = original, 1400);
+      } catch (err) {
         alert('Gagal menyalin. Silakan salin manual: ' + text);
       }
     });
@@ -294,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && !bgMusic.paused) {
       bgMusic.pause();
-      musicToggle.setAttribute('aria-pressed','false');
+      musicToggle.setAttribute('aria-pressed', 'false');
       musicToggle.classList.remove('on');
     }
   });
@@ -303,25 +314,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bgVideo) {
     bgVideo.muted = true;
     bgVideo.loop = true;
-    bgVideo.play().catch(()=>{/* blocked until gesture */});
+    bgVideo.play().catch(() => {/* blocked until gesture */ });
   }
 
   // --- PARALLAX: mousemove + scroll effect ---
   // Keep the movement subtle to mimic templates like Wekita
-  (function setupParallax(){
+  (function setupParallax() {
     // Mouse-driven parallax (only when viewport wide enough)
     let ww = window.innerWidth;
     function applyParallax(mouseX, mouseY) {
       parallaxLayers.forEach(layer => {
         const speed = parseFloat(layer.dataset.speed) || 0.03;
-        const x = (mouseX - ww/2) * speed;
-        const y = (mouseY - window.innerHeight/2) * speed;
+        const x = (mouseX - ww / 2) * speed;
+        const y = (mouseY - window.innerHeight / 2) * speed;
         layer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       });
       // small tilt for SVG frame
       if (floralSVG) {
-        const tiltX = (mouseY - window.innerHeight/2) * 0.002;
-        const tiltY = (mouseX - ww/2) * -0.002;
+        const tiltX = (mouseY - window.innerHeight / 2) * 0.002;
+        const tiltY = (mouseX - ww / 2) * -0.002;
         floralSVG.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
       }
     }
@@ -383,18 +394,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // init split immediately so layout stable; reveal triggered on open or when visible
   if (titleEls) {
     titleEls.forEach((titleEl) => {
-    splitTitleToLetters(titleEl);
+      splitTitleToLetters(titleEl);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !titleEl.classList.contains('animated')) {
-          animateTitleLetters(titleEl);
-        }
-      });
-    }, { threshold: 0.35 });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !titleEl.classList.contains('animated')) {
+            animateTitleLetters(titleEl);
+          }
+        });
+      }, { threshold: 0.35 });
 
-    observer.observe(titleEl);
-  });
+      observer.observe(titleEl);
+    });
 
   }
 
@@ -436,14 +447,14 @@ document.addEventListener('DOMContentLoaded', () => {
             musicToggle.classList.add('on');
           });
         }
-      } catch(e) {
+      } catch (e) {
         console.warn("Autoplay blocked:", e);
       }
       // Play hero video once
       if (heroBgVideo) {
         heroBgVideo.muted = true;
         heroBgVideo.loop = false;
-        heroBgVideo.play().catch(()=>{});
+        heroBgVideo.play().catch(() => { });
         heroBgVideo.addEventListener('ended', () => {
           heroBgVideo.pause();
         });

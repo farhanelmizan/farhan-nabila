@@ -33,7 +33,7 @@
         <p class="cover-title">The Wedding Of</p>
         <h1 class="cover-names">Nabila &amp; Farhan</h1>
         <img class="cover-hero" src="media/hero_couple.webp" alt="">
-        <p class="cover-dear">Kepada YTH Bapak/Ibu/Saudara/i<br><span id="guestName">Nama Tamu</span></p>
+        <p class="cover-dear">Kepada YTH Bapak/Ibu/Saudara/i<br><span id="guestName">...</span></p>
         <button id="openInviteCover" class="btn btn-primary">Open Invitation</button>
       </div>
     </div>
@@ -367,6 +367,16 @@
         });
     });
 
+
+    document.querySelectorAll('.bottom-navbar a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetEl = document.getElementById(targetId);
+
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
   </script>
 </body>
 
