@@ -452,4 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  document.getElementById("viewEvents").addEventListener("click", function () {
+    const eventSection = document.getElementById("event");
+    eventSection.scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.getElementById("btn-reminder").addEventListener("click", function () {
+    window.open("https://calendar.google.com/calendar/r/eventedit?text=Nabila+%26+Farhan+Wedding&dates=20260117T010000Z/20260117T070000Z&location=Masjid+Daarul+Adzkaar%2C+Lebak+Bulus%2C+Jakarta+Selatan&details=Acara+Pernikahan+Nabila+%26+Farhan", "_blank");
+  });
+
+
 });
